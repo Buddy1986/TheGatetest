@@ -1,0 +1,34 @@
+name: The_Gate
+version: 3.1mc26.2-spig
+main: thegate.main.TheGateMain
+load: POSTWORLD
+authors: ['EndMySuffering', 'donner', 'lukas123313']
+api-version: '26.2'
+
+commands:
+  Gatetools:
+    description: Opens the Gatetools UI.
+    usage: /gatetools
+    aliases: [gt]
+  TheGate:
+    description: Functional command to reload the config or display information.
+    usage: /thegate [reload|help|syncdb|gatedescription|gatename|create|rotate]
+    aliases: [tg]
+
+softdepend:
+  - Multiverse-Core
+  - IridiumSkyblock
+  - Essentials
+
+# Geyser-Spigot moved from softdepend to loadbefore: The_Gate now writes Geyser's custom_skulls.json
+# mappings file (see GeyserSkullSync.java) from its own onEnable(), and that only helps if it happens
+# BEFORE Geyser reads that file during its own startup. isBedrock() checks at runtime (BedrockCompat.java)
+# don't care about load order at all - only this file-write does.
+loadbefore:
+  - Geyser-Spigot
+
+# SPIGOT VARIANT: PacketEvents is not bundled in this build - it must be installed
+# separately as its own plugin. 'depend' (not 'softdepend') because the plugin
+# genuinely cannot function without it here.
+depend:
+  - packetevents
